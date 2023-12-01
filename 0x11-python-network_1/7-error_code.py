@@ -1,17 +1,15 @@
 #!/usr/bin/python3
-"""0x11. Python - Network #1, task 7. Error code #1
+"""displays the value of the X-Request-Id variable found in
+the header of the response.
 """
 
-if __name__ == "__main__":
-        from requests import get
-            from sys import argv
 
-    try:
-        response = get(argv[1])
-    # override defualt handling of exceptions and reraise them
-    response.raise_for_status()
-    except:
- 
-    print('Error code: {}'.format(response.status_code)) 
-else:
-    print(response.text)
+if __name__ == "__main__":
+    from requests import get
+    from sys import argv
+
+    response = get(argv[1])
+    if response.status_code >= 400:
+        print("Error code: {}".format(response.status_code))
+    else:
+        print(response.text)

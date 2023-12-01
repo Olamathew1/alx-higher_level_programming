@@ -1,19 +1,20 @@
 #!/usr/bin/python3
-"""0x11. Python - Network #1, task 8. Search API
+"""displays the value of the X-Request-Id variable found in
+the header of the response.
 """
+
 
 if __name__ == "__main__":
     from requests import post
     from sys import argv
 
-    q = '' if len(argv) < 2 else argv[1]
-    response = post('http://0.0.0.0:5000/search_user', data={'q': q})
+    q = argv[1] if len(argv) > 1 else ""
+    r = post('http://0.0.0.0:5000/search_user', data={'q': q})
     try:
-        json_dict = response.json()
+        response = r.json()
+        if response == {}:
+            print('No result')
+        else:
+            print("[{}] {}".format(response.get("id"), response.get("name")))
     except ValueError:
-        print('No result' if response.status_code == 204
-            else 'Not a valid JSON')
-    else:
-        print('No result' if len(json_dict) == 0 
-    else '[{}] {}'.format(json_dict.get('id'),
-                    json_dict.get('name')))
+        print('Not a valid JSON')
