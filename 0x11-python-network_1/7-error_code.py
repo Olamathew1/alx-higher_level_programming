@@ -11,7 +11,7 @@ if __name__ == "__main__":
     # override defualt handling of exceptions and reraise them
     response.raise_for_status()
     except:
-    
+ 
     print('Error code: {}'.format(response.status_code)) 
 else:
     print(response.text)
