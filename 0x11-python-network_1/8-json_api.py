@@ -1,23 +1,19 @@
 #!/usr/bin/python3
-"""A script tha:
-    - takes in a letter
-    - sends POST request to http://0.0.0.0:5000/search_user
-    with the letter as a parameter.
-    """
-    import sys
-    import requests
+"""0x11. Python - Network #1, task 8. Search API
+"""
 
+if __name__ == "__main__":
+    from requests import post
+    from sys import argv
 
-    if __name__ == "__main__":
-        letter = "" if len(sys.argv) == 1 else sys.argv[1]
-        payload = {"q": letter}
-
-        r = requests.post("http://0.0.0.0:5000/search_user", data=payload)
+    q = '' if len(argv) < 2 else argv[1]
+    response = post('http://0.0.0.0:5000/search_user', data={'q': q})
     try:
-        response = r.json()
-    if response == {}:
-    print("No result")
-    else:
-    print("[{}] {}".format(response.get("id"), response.get("name")))
+        json_dict = response.json()
     except ValueError:
-    print("Not a valid JSON")
+        print('No result' if response.status_code == 204
+            else 'Not a valid JSON')
+    else:
+        print('No result' if len(json_dict) == 0 
+    else '[{}] {}'.format(json_dict.get('id'),
+                    json_dict.get('name')))

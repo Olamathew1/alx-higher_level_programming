@@ -1,18 +1,17 @@
 #!/usr/bin/python3
-"""A script that
-- takes in a URL
-- sends a request to the URL
-- displays the body of the response.
+"""0x11. Python - Network #1, task 7. Error code #1
 """
-import sys
-import requests
-
 
 if __name__ == "__main__":
-   url = sys.argv[1]
+        from requests import get
+            from sys import argv
 
-   r = requests.get(url)
-if r.status_code >= 400:
-    print("Error code: {}".format(r.status_code))
+    try:
+        response = get(argv[1])
+    # override defualt handling of exceptions and reraise them
+    response.raise_for_status()
+    except:
+    
+    print('Error code: {}'.format(response.status_code)) 
 else:
-    print(r.text)
+    print(response.text)
